@@ -1,30 +1,59 @@
 <template>
   <q-page class="q-pa-lg">
-    <input v-model="message"
-    @keyup.esc="clearMessage"
-    @keyup.enter="alertMessage"/>
-    <button @click="clearMessage">clear</button>
-    <h5 class="border-black" v-show="message.length">{{ message }} </h5>
+    <ul>
+      <task 
+      v-for="(task, index) in tasks"
+      :key="task.id"
+      :task="task"
+      :index="index"> {{task.name}} </task>
+    </ul>
   </q-page>
 </template>
 
 
 <script>
+
 export default {
-  data(){
-    return{
-      message: "I love vue.js"
+  data() {
+    return {
+      tasks: [
+        {
+          id: 0,
+          name: "Go to bed",
+          dueDate: "2019/05/12",
+          dueTime: "18:30"
+        },
+        {
+          id: 1,
+          name: "Go to bed",
+          dueDate: "2019/05/12",
+          dueTime: "18:30"
+        },
+        {
+          id: 2,
+          name: "Go to bed",
+          dueDate: "2019/05/12",
+          dueTime: "18:30"
+        },
+        {
+          id: 3,
+          name: "Go to bed",
+          dueDate: "2019/05/12",
+          dueTime: "18:30"
+        }
+      ]
     }
   },
   methods: {
-    clearMessage() {
-      this.message = ''
-    },
-    alertMessage(){
-      alert(this.message)
+    deleteTask(index) {
+      this.tasks.splice(index, 1)
     }
+  },
+  components: {
+    'task' : require('components/Task.vue').default
   }
 }
+
 </script>
 
 <style>
