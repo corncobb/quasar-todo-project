@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const state = {
     tasks: {
         'ID1': {
@@ -22,10 +24,24 @@ const state = {
 }
 
 const mutations = {
+    updateTask(state, payload){
+        console.log('payload (from mutation): ', payload);
+        Object.assign(state.tasks[payload.id], payload.updates)
+    },
+    deleteTask(state, id){
+        console.log('delete id: ', id);
+        Vue.delete(state.tasks, id)
+    }
 
 }
 
 const actions = {
+    updateTask({ commit }, payload) {
+        commit('updateTask', payload)
+    },
+    deleteTask({ commit }, id) {
+        commit('deleteTask', id)
+    }
 
 }
 
