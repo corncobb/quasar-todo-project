@@ -36,7 +36,7 @@
               color="primary" 
               icon="edit" />
             <q-btn
-              @click.stop="promptToDelete(id)"
+              @click.stop="showDeletePopup = true"
               flat
               round 
               dense 
@@ -52,6 +52,23 @@
               :id="id"/>
         </q-dialog>
 
+        <q-dialog persistent v-model="showDeletePopup">
+            <q-card style="width: 300px">
+              <q-card-section class="row">
+                 <div class="text-h4">Confirm</div>
+              </q-card-section>
+
+              <q-card-section class="row">
+                 <div class="text-body1">Do you really want to delete this task?</div>
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn label="Cancel" color="red" v-close-popup />
+                <q-btn label="OK" @click="deleteThisTask(id)" color="primary" v-close-popup />
+              </q-card-actions>
+            </q-card>
+        </q-dialog>
+
       </q-item>
     
 </template>
@@ -63,27 +80,21 @@ export default {
     props: ['task', 'id'],
     data() {
       return{
-        showEditTask: false
+        showEditTask: false,
+        showDeletePopup: false
       }
     },
     methods: {
         ...mapActions('tasks', ['updateTask', 'deleteTask']),
-        promptToDelete(id){
-            this.$q.dialog({
-                title: 'Confirm',
-                message: 'Really Delete?',
-                cancel: true,
-                persistent: true
-            }).onOk(() => {
-                this.deleteTask(id)
-            })
+        deleteThisTask(id){
+          this.deleteTask(id);
         }
     },
     components: {
       'edit-task': require('components/Tasks/Modals/EditTask.vue').default
     }
-    
 }
+
 </script>
 
 <style scoped>
