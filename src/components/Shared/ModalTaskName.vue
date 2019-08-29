@@ -1,6 +1,8 @@
 <template>
     <div class="row q-mb-sm">
                 <q-input
+                counter 
+                maxlength="25"
                 clearable 
                 outlined
                 autofocus
