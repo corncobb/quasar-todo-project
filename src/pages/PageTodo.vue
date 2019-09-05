@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page>
 
     <div class="q-pa-md absolute full-width full-height column">
 
@@ -10,7 +10,7 @@
 
       <p v-if="search && !Object.keys(tasksTodo).length && !Object.keys(tasksCompleted).length">No search results.</p>
 
-      <q-scroll-area class="q-scroll-area">
+      <q-scroll-area class="q-scroll-area-tasks">
 
         <no-tasks
           v-if="!Object.keys(tasksTodo).length && !search">
@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
 
-.q-scroll-area {
+.q-scroll-area-tasks {
   display: flex;
   flex-grow: 1;
 }
