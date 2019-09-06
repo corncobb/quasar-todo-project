@@ -5,7 +5,7 @@
             <template v-slot:avatar>
                 <q-icon name="account_circle" color="primary" />
             </template>
-            Register to access your Tasks anywhere!
+            {{ tab | titleCase }} to access your Tasks anywhere!
             </q-banner>
         </div>
         <div class="row q-mb-md">
@@ -16,7 +16,7 @@
                 label="Email"
                 :rules="[ val => isValidEmailAddress(val) || 'Please enter a valid email address']"
                 lazy-rules
-                refs="email"/>
+                ref="email"/>
         </div>
         <div class="row q-mb-md">
             <q-input 
@@ -27,7 +27,7 @@
                 filled :type="isPwd ? 'password' : 'text'" 
                 :rules="[ val => val.length >= 6 || 'Please enter at least 6 characters']"
                 lazy-rules
-                refs="password"
+                ref="password"
                 >
                 <template v-slot:append>
                 <q-icon
@@ -42,21 +42,21 @@
             <q-space />
                 <q-btn 
                 color="primary" 
-                label="Register" />
+                :label="tab"
+                type="submit" />
         </div>
     </form>
 </template>
 
 <script>
     export default {
+        props: ['tab'],
         data() {
             return {
                 isPwd: true,
                 formData: {
                     email: '',
                     password: '',
-
-
                 }
             }
         },
@@ -69,9 +69,20 @@
                 this.$refs.email.validate()
                 this.$refs.password.validate()
                 if (!this.$refs.email.hasError && !this.$refs.password.hasError) {
-                    console.log('Success')
+                    if (this.tab == 'login') {
+                        console.log('Login user')
+                    }
+                    else {
+                        console.log('Register user')
+                    }
                 }
             }
-        }        
+        },
+        filters: {
+            titleCase(value) {
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            }
+
+        }       
     }
 </script>

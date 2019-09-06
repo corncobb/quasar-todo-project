@@ -18,12 +18,11 @@
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="login">
-            <div class="text-h6">Login</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <login-register :tab="tab"/>
           </q-tab-panel>
 
           <q-tab-panel name="register">
-              <register />
+              <login-register :tab="tab"/>
           </q-tab-panel>
 
         </q-tab-panels>
@@ -35,11 +34,11 @@
     export default {
         data () {
             return {
-            tab: 'register'
+                tab: 'register'
             }
         },
         components: {
-            'register': require('components/Auth/Register.vue').default
+            'login-register': require('components/Auth/LoginRegister.vue').default
         }
     }
 </script>
