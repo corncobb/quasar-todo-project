@@ -4,7 +4,7 @@
         enter-active-class="animated zoomIn"
         leave-active-class="animated zoomOut absolute-top"
     >
-        <div class="q-mt-lg">
+        <div>
             <list-header
                 v-if="!settings.showTasksInOneList"
                 bgColor="bg-orange-4">Todo</list-header>

@@ -1,5 +1,5 @@
 <template>
-<q-item
+    <q-item
       @click="updateTask({ id: id, updates: { completed: !task.completed} })"
       :class="!task.completed ? 'bg-orange-1' : 'bg-green-1'"
       clickable
