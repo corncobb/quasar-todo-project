@@ -3,6 +3,8 @@
 
     <div class="q-pa-md absolute full-width full-height column">
 
+      <template>
+
       <div class="row q-mb-lg">
         <search></search>
         <sort />
@@ -28,23 +30,23 @@
 
       </q-scroll-area>
 
-      <div class="absolute-bottom text-center q-pb-lg no-pointer-events">
-        <q-btn
-          @click="showAddTask = true"
-          size="24px"
-          round
-          color="primary"
-          icon="add"
-          class="all-pointer-events"
-        />
+        <div class="absolute-bottom text-center q-pb-lg no-pointer-events">
+          <q-btn
+            @click="showAddTask = true"
+            size="24px"
+            round
+            color="primary"
+            icon="add"
+            class="all-pointer-events"
+          />
 
-      </div>
+        </div>
+      </template>
     </div>
 
-         <q-dialog v-model="showAddTask">
-            <add-task @close="showAddTask = false"/>
-        </q-dialog>
-
+    <q-dialog v-model="showAddTask">
+      <add-task @close="showAddTask = false"/>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -62,7 +64,7 @@ export default {
   computed: {
     ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
     ...mapGetters('settings', ['settings']),
-    ...mapState('tasks', ['search'])
+    ...mapState('tasks', ['search', 'tasksDownloaded'])
   },
   mounted() {
     this.$root.$on('showAddTask', () => {
