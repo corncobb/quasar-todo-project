@@ -76,6 +76,12 @@ const actions = {
     fbReadData({ commit }) {
         let userId = firebaseAuth.currentUser.uid
         let userTasks = firebaseDb.ref('tasks/' + userId)
+        
+        // initial check for data
+        userTasks.once('value', snapshot => {
+            commit('setTasksDownloaded', true)
+        })
+
         //child added
         userTasks.on('child_added', snapshot => {
             let task = snapshot.val()

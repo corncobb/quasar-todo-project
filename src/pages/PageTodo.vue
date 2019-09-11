@@ -3,7 +3,7 @@
 
     <div class="q-pa-md absolute full-width full-height column">
 
-      <template>
+      <template v-if="tasksDownloaded">
 
       <div class="row q-mb-lg">
         <search></search>
@@ -41,6 +41,14 @@
           />
 
         </div>
+      </template>
+      <template v-else>
+        <span class="absolute-center">
+          <q-spinner
+            color="primary"
+            size="3em"
+          />
+        </span>
       </template>
     </div>
 
