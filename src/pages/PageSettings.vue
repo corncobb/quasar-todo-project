@@ -104,10 +104,10 @@ export default {
   methods: {
     ...mapActions('settings', ['setShow12HourTimeFormat', 'setShowTasksInOneList']),
     visitOurWebsite() {
-      openURL('http://www.google.com')
+      openURL('http://camcobb.com')
     },
     emailUs() {
-      window.location.href = 'mailto: hello@awesometodo?subject=Awesome Todo Feedback'
+      window.location.href = 'mailto: cameron@camcobb.com?subject=Awesome Todo Feedback'
     }
   }
 }
