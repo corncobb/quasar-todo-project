@@ -5,8 +5,8 @@
         <q-input 
             outlined
             label="Due time"
-            :value="dueTime"
-            @input="$emit('update:dueTime', $event)"
+            :model-value="dueTime"
+            @update:model-value="$emit('update:dueTime', $event)"
             class="col">
             <template v-slot:append>
                 <q-icon
@@ -17,8 +17,8 @@
                 class='curson-pointer'/>
                 <q-icon name="access_time" class="cursor-pointer">
                     <q-popup-proxy transition-show="scale" transition-hide="scale">
-                        <q-time :value="dueTime"
-                        @input="$emit('update:dueTime', $event)" />
+                        <q-time :model-value="dueTime"
+                        @update:model-value="$emit('update:dueTime', $event)" />
                     </q-popup-proxy>
                 </q-icon>
             </template>

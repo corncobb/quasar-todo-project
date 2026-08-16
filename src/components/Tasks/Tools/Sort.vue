@@ -13,7 +13,8 @@
 
 <script>
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'pinia'
+import { useTasksStore } from 'stores/tasks-store'
 
 export default {
     data () {
@@ -31,7 +32,7 @@ export default {
         }
     },
   computed: {
-      ...mapState('tasks', ['sort']),
+      ...mapState(useTasksStore, ['sort']),
       sortBy: {
           get() {
               return this.sort
@@ -42,7 +43,7 @@ export default {
       }
   },
   methods: {
-      ...mapActions('tasks', ['setSort'])
+      ...mapActions(useTasksStore, ['setSort'])
   }
 }
 

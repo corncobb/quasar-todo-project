@@ -31,6 +31,8 @@
 </template>
 
 <script>
+    import LoginRegister from 'components/Auth/LoginRegister.vue'
+
     export default {
         data () {
             return {
@@ -38,7 +40,7 @@
             }
         },
         components: {
-            'login-register': require('components/Auth/LoginRegister.vue').default
+            'login-register': LoginRegister
         }
     }
 </script>

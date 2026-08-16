@@ -7,10 +7,9 @@
             outlined
             v-select-all
             autofocus
-            @input="$emit('update:name', $event)"
+            @update:model-value="$emit('update:name', $event)"
             :rules="[val => !!val || 'Field is required']"
-            ref="name"
-            :value="name"
+            :model-value="name"
             label="Task name" 
             class="col"/>
     </div>
