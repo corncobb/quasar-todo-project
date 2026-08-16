@@ -1,33 +1,31 @@
 <template>
-    <form @submit.prevent="submitForm">
+    <q-form @submit="submitForm">
         <div class="row q-mb-md">
             <q-banner class="bg-grey-3 col">
             <template v-slot:avatar>
                 <q-icon name="account_circle" color="primary" />
             </template>
-            {{ tab | titleCase }} to access your Tasks anywhere!
+            {{ titleCase(tab) }} to access your Tasks anywhere!
             </q-banner>
         </div>
         <div class="row q-mb-md">
-            <q-input 
+            <q-input
                 class="col"
-                outlined 
-                v-model="formData.email" 
+                outlined
+                v-model="formData.email"
                 label="Email"
                 :rules="[ val => isValidEmailAddress(val) || 'Please enter a valid email address']"
-                lazy-rules
-                ref="email"/>
+                lazy-rules/>
         </div>
         <div class="row q-mb-md">
-            <q-input 
+            <q-input
                 outlined
                 label="Password"
                 class="col"
-                v-model="formData.password" 
-                filled :type="isPwd ? 'password' : 'text'" 
+                v-model="formData.password"
+                filled :type="isPwd ? 'password' : 'text'"
                 :rules="[ val => val.length >= 6 || 'Please enter at least 6 characters']"
                 lazy-rules
-                ref="password"
                 >
                 <template v-slot:append>
                 <q-icon
@@ -40,16 +38,17 @@
         </div>
         <div class="row">
             <q-space />
-                <q-btn 
-                color="primary" 
+                <q-btn
+                color="primary"
                 :label="tab"
                 type="submit" />
         </div>
-    </form>
+    </q-form>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from 'pinia'
+import { useAuthStore } from 'stores/auth-store'
 
     export default {
         props: ['tab'],
@@ -63,29 +62,25 @@ import { mapActions } from 'vuex'
             }
         },
         methods: {
-            ...mapActions('auth', ['registerUser', 'loginUser']),
+            ...mapActions(useAuthStore, ['registerUser', 'loginUser']),
             isValidEmailAddress(email) {
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(String(email).toLowerCase()); 
+                return re.test(String(email).toLowerCase());
             },
             submitForm() {
-                this.$refs.email.validate()
-                this.$refs.password.validate()
-                if (!this.$refs.email.hasError && !this.$refs.password.hasError) {
-                    if (this.tab == 'login') {
-                        this.loginUser(this.formData)
-                    }
-                    else {
-                        this.registerUser(this.formData)
-                    }
+                if (!this.isValidEmailAddress(this.formData.email) || this.formData.password.length < 6) {
+                    return
                 }
-            }
-        },
-        filters: {
+                if (this.tab == 'login') {
+                    this.loginUser(this.formData)
+                }
+                else {
+                    this.registerUser(this.formData)
+                }
+            },
             titleCase(value) {
                 return value.charAt(0).toUpperCase() + value.slice(1)
             }
-
-        }       
+        }
     }
 </script>

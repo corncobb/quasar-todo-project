@@ -26,16 +26,19 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapState } from 'pinia'
+	import Task from 'components/Tasks/Task.vue'
+	import ListHeader from 'components/Shared/ListHeader.vue'
+	import { useSettingsStore } from 'stores/settings-store'
 
 	export default {
 		props: ['tasksTodo'],
 		computed: {
-			...mapGetters('settings', ['settings'])
+			...mapState(useSettingsStore, ['settings'])
 		},
 		components: {
-			'task' : require('components/Tasks/Task.vue').default,
-			'list-header' : require('components/Shared/ListHeader.vue').default,
+			'task' : Task,
+			'list-header' : ListHeader,
 		}
 	}
 </script>

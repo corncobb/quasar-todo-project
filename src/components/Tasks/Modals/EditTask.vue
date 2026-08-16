@@ -2,21 +2,20 @@
       <q-card>
         <modal-header>Edit Task</modal-header>
 
-        <q-form  @submit.prevent="submitForm">
+        <q-form @submit="submitForm">
 
         <q-card-section>
 
-            <modal-task-name 
-                :name.sync="taskToSubmit.name" 
-                ref="modalTaskName"/>
-                
-            <modal-due-date 
-                :dueDate.sync="taskToSubmit.dueDate"
+            <modal-task-name
+                v-model:name="taskToSubmit.name"/>
+
+            <modal-due-date
+                v-model:dueDate="taskToSubmit.dueDate"
                 @clear="clearDueDate"/>
 
-            <modal-due-time 
+            <modal-due-time
                 v-if="taskToSubmit.dueDate"
-                :dueTime.sync="taskToSubmit.dueTime"/>
+                v-model:dueTime="taskToSubmit.dueTime"/>
 
         </q-card-section>
         
@@ -28,8 +27,9 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions } from 'pinia'
     import mixinAddEditTask from 'src/mixins/mixin-add-edit-task'
+    import { useTasksStore } from 'stores/tasks-store'
 
 export default {
     props: ['task', 'id'],
@@ -40,7 +40,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('tasks', ['updateTask']),
+        ...mapActions(useTasksStore, ['updateTask']),
        
         submitTask() {
             this.updateTask({

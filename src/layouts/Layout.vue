@@ -40,11 +40,10 @@
       :breakpoint="767"
       :width="250"
       bordered
-      content-class="bg-primary"
     >
-      <q-list dark>
+      <q-list dark class="fit bg-primary">
         <q-item-label header>Navigation</q-item-label>
-        <q-item 
+        <q-item
         class="text-grey-4"
         v-for="nav in navs"
         :key="nav.label"
@@ -70,7 +69,8 @@
 
 <script>
 import { openURL } from 'quasar'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'pinia'
+import { useAuthStore } from 'stores/auth-store'
 
 export default {
   name: 'MyLayout',
@@ -92,10 +92,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['loggedIn'])
+    ...mapState(useAuthStore, ['loggedIn'])
   },
   methods: {
-    ...mapActions('auth', ['logoutUser']),
+    ...mapActions(useAuthStore, ['logoutUser']),
     openURL
   }
 }

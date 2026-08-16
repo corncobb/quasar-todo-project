@@ -78,12 +78,13 @@
 
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'pinia'
 import { openURL } from 'quasar'
+import { useSettingsStore } from 'stores/settings-store'
 
 export default {
   computed: {
-    ...mapGetters('settings', ['settings']),
+    ...mapState(useSettingsStore, ['settings']),
     show12HourTimeFormat: {
       get() {
         return this.settings.show12HourTimeFormat
@@ -102,7 +103,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('settings', ['setShow12HourTimeFormat', 'setShowTasksInOneList']),
+    ...mapActions(useSettingsStore, ['setShow12HourTimeFormat', 'setShowTasksInOneList']),
     visitOurWebsite() {
       openURL('http://camcobb.com')
     },

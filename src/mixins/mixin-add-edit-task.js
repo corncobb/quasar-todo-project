@@ -1,11 +1,16 @@
+import ModalHeader from 'components/Shared/ModalHeader.vue'
+import ModalTaskName from 'components/Shared/ModalTaskName.vue'
+import ModalDueDate from 'components/Shared/ModalDueDate.vue'
+import ModalDueTime from 'components/Shared/ModalDueTime.vue'
+import ModalButtons from 'components/Shared/ModalButtons.vue'
+
 export default {
     methods: {
         submitForm() {
-            console.log('submitForm');
-            this.$refs.modalTaskName.$refs.name.validate()
-            if (!this.$refs.modalTaskName.$refs.name.hasError) {
-                this.submitTask()
+            if (!this.taskToSubmit.name) {
+                return
             }
+            this.submitTask()
         },
         clearDueDate() {
             this.taskToSubmit.dueDate = ''
@@ -13,10 +18,10 @@ export default {
         }
     },
     components: {
-        'modal-header': require('components/Shared/ModalHeader.vue').default,
-        'modal-task-name': require('components/Shared/ModalTaskName.vue').default,
-        'modal-due-date': require('components/Shared/ModalDueDate.vue').default,
-        'modal-due-time': require('components/Shared/ModalDueTime.vue').default,
-        'modal-buttons': require('components/Shared/ModalButtons.vue').default
+        'modal-header': ModalHeader,
+        'modal-task-name': ModalTaskName,
+        'modal-due-date': ModalDueDate,
+        'modal-due-time': ModalDueTime,
+        'modal-buttons': ModalButtons
     }
 }

@@ -13,7 +13,8 @@
 
   			<q-scroll-area class="q-scroll-area-tasks">
   				<no-tasks
-  					v-if="!Object.keys(tasksTodo).length && !search && !settings.showTasksInOneList"></no-tasks>
+  					v-if="!Object.keys(tasksTodo).length && !search && !settings.showTasksInOneList"
+  					@add-task="showAddTask = true"></no-tasks>
 
   				<tasks-todo
   					v-if="Object.keys(tasksTodo).length"
@@ -55,7 +56,15 @@
 </template>
 
 <script>
-	import { mapGetters, mapState } from 'vuex'
+	import { mapState } from 'pinia'
+	import AddTask from 'components/Tasks/Modals/AddTask.vue'
+	import TasksTodo from 'components/Tasks/TasksTodo.vue'
+	import TasksCompleted from 'components/Tasks/TasksCompleted.vue'
+	import NoTasks from 'components/Tasks/NoTasks.vue'
+	import Search from 'components/Tasks/Tools/Search.vue'
+	import Sort from 'components/Tasks/Tools/Sort.vue'
+	import { useTasksStore } from 'stores/tasks-store'
+	import { useSettingsStore } from 'stores/settings-store'
 
 	export default {
 		data() {
@@ -64,22 +73,16 @@
 			}
 		},
 		computed: {
-			...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
-			...mapGetters('settings', ['settings']),
-			...mapState('tasks', ['search', 'tasksDownloaded'])
-		},
-		mounted() {
-			this.$root.$on('showAddTask', () => {
-				this.showAddTask = true
-			})
+			...mapState(useTasksStore, ['tasksTodo', 'tasksCompleted', 'search', 'tasksDownloaded']),
+			...mapState(useSettingsStore, ['settings'])
 		},
 		components: {
-			'add-task' : require('components/Tasks/Modals/AddTask.vue').default,
-			'tasks-todo' : require('components/Tasks/TasksTodo.vue').default,
-			'tasks-completed' : require('components/Tasks/TasksCompleted.vue').default,
-			'no-tasks' : require('components/Tasks/NoTasks.vue').default,
-			'search' : require('components/Tasks/Tools/Search.vue').default,
-			'sort' : require('components/Tasks/Tools/Sort.vue').default
+			'add-task' : AddTask,
+			'tasks-todo' : TasksTodo,
+			'tasks-completed' : TasksCompleted,
+			'no-tasks' : NoTasks,
+			'search' : Search,
+			'sort' : Sort
 		}
 	}
 </script>

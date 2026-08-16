@@ -14,7 +14,7 @@
     <q-item-section>
       <q-item-label
       	:class="{ 'text-strikethrough' : task.completed }"
-        v-html="$options.filters.searchHighlight(task.name, search)">
+        v-html="searchHighlight(task.name, search)">
       </q-item-label>
     </q-item-section>
 
@@ -32,7 +32,7 @@
           <q-item-label 
           	class="row justify-end"
           	caption>
-          	{{ task.dueDate | niceDate }}
+          	{{ niceDate(task.dueDate) }}
           </q-item-label>
           <q-item-label
           	class="row justify-end"
@@ -73,8 +73,11 @@
 </template>
 
 <script>
-  import { mapState, mapActions, mapGetters } from 'vuex'
+  import { mapState, mapActions } from 'pinia'
   import { date } from 'quasar'
+  import EditTask from 'components/Tasks/Modals/EditTask.vue'
+  import { useTasksStore } from 'stores/tasks-store'
+  import { useSettingsStore } from 'stores/settings-store'
 
 	export default {
 		props: ['task', 'id'],
@@ -84,8 +87,8 @@
       }
     },
     computed: {
-      ...mapState('tasks', ['search']),
-      ...mapGetters('settings', ['settings']),
+      ...mapState(useTasksStore, ['search']),
+      ...mapState(useSettingsStore, ['settings']),
       taskDueTime() {
         if (this.settings.show12HourTimeFormat) {
           return date.formatDate(this.task.dueDate + ' ' + this.task.dueTime, 'h:mmA')
@@ -94,7 +97,7 @@
       }
     },
     methods: {
-      ...mapActions('tasks', ['updateTask', 'deleteTask']),
+      ...mapActions(useTasksStore, ['updateTask', 'deleteTask']),
       showEditTaskModal() {
         this.showEditTask = true
       },
@@ -112,9 +115,7 @@
         }).onOk(() => {
           this.deleteTask(id)
         })
-      } 
-    },
-    filters: {
+      },
       niceDate(value) {
         return date.formatDate(value, 'MMM D')
       },
@@ -129,7 +130,7 @@
       }
     },
     components: {
-      'edit-task': require('components/Tasks/Modals/EditTask.vue').default
+      'edit-task': EditTask
     }
 	}
 </script>

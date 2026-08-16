@@ -20,12 +20,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'pinia'
 import { selectAll } from 'src/directives/directive-select-all'
+import { useTasksStore } from 'stores/tasks-store'
 
 export default {
     computed: {
-        ...mapState('tasks', ['search']),
+        ...mapState(useTasksStore, ['search']),
         searchField: {
             get() {
                 return this.search
@@ -36,7 +37,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('tasks', ['setSearch'])
+        ...mapActions(useTasksStore, ['setSearch'])
     },
     directives: {
         selectAll
